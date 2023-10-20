@@ -6,6 +6,7 @@ package ejb.session.stateless;
 
 import entity.AtmCard;
 import entity.DepositAccount;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,14 +28,37 @@ public class AtmCardSessionBean implements AtmCardSessionBeanRemote, AtmCardSess
     public Long createNewAtmCard(AtmCard newCard, List<DepositAccount> depoAccList) {
         em.persist(newCard);
         em.flush();
+//        List<DepositAccount> list = new ArrayList<DepositAccount>();
+//        
+////        for (DepositAccount depoAcc: depoAccList) {
+////            DepositAccount depoAccount = em.merge(depoAcc);
+////            newCard.getDepositAccount().add(depoAccount);
+////            depoAccount.setAtmCard(newCard);
+////        }
+//        for (DepositAccount depoAcc: depoAccList) {
+//            DepositAccount depoAccount = em.merge(depoAcc);
+//            list.add(depoAccount);
+//            depoAccount.setAtmCard(newCard);
+//        }
+//        
+//        newCard.setDepositAccount(list);
+//        return newCard.getAtmCardId();  
+
         
+        
+//        for (DepositAccount depoAcc: depoAccList) {
+//            DepositAccount depoAccount = em.merge(depoAcc);
+//            newCard.getDepositAccount().add(depoAccount);
+//            depoAccount.setAtmCard(newCard);
+//        }
         for (DepositAccount depoAcc: depoAccList) {
             DepositAccount depoAccount = em.merge(depoAcc);
+            int initialise = newCard.getDepositAccount().size();
             newCard.getDepositAccount().add(depoAccount);
             depoAccount.setAtmCard(newCard);
         }
         
-        return newCard.getAtmCardId();        
+        return newCard.getAtmCardId();       
     }
     
     @Override

@@ -41,7 +41,6 @@ public class Main {
             instructions += "1: Insert ATM Card \n";
             instructions += "2: Change Pin Number \n";
             instructions += "3: Enquire Available Balance \n";
-            instructions += "4: Request for Replacement of ATM Card \n";
         } else {
             instructions += "Too bad! Get Teller Terminal to sign you up as a customer first :p";
         }
