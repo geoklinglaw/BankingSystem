@@ -47,12 +47,15 @@ public class AutomatedTellerMachineSessionBean implements AutomatedTellerMachine
         return card;
     }
     
-    public void changePin(String cardNum, String cardPin, String newPin) throws FailedToChangePin, CouldNotRetrieveFromDB {
+    @Override
+    public void retrieveAndChangePin(String cardNum, String cardPin, String newPin) throws FailedToChangePin, CouldNotRetrieveFromDB {
+        System.out.println("does it even go to retrieveandchangepin");
         Long cardId = atmCardSessionBeanLocal.retrieveATMCardByNumPin(cardNum, cardPin);
         atmCardSessionBeanLocal.changePin(cardId, newPin);
     }
 
         
+    @Override
     public Long getATMId(String cardNum, String cardPin) throws CouldNotRetrieveFromDB{
         Long cardId = atmCardSessionBeanLocal.retrieveATMCardByNumPin(cardNum, cardPin);
         return cardId;

@@ -7,6 +7,7 @@ package ejb.session.stateless;
 import entity.AtmCard;
 import entity.Customer;
 import entity.DepositAccount;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -33,9 +34,24 @@ public class TellerTerminalMachineSessionBean implements TellerTerminalMachineSe
 
     @Override
     public Long issueNewAtmCard(AtmCard card, Customer customer) {
-        customer.setAtmCard(card);
-        return atmCardSessionBeanLocal.createNewAtmCard(card);
-    }   
+        Customer mergedCustomer = em.merge(customer);
+        mergedCustomer.setAtmCard(card);
+        List<DepositAccount> depositAccounts = mergedCustomer.getDepositAccount();
+
+        return atmCardSessionBeanLocal.createNewAtmCard(card, depositAccounts);
+    }
+
+    @Override
+    public void replaceWithNewAtmCard(AtmCard newCard, AtmCard oldCard, Customer customer) {
+        oldCard = em.merge(oldCard);
+        Customer mergedCustomer = em.merge(customer);
+        mergedCustomer.setAtmCard(newCard);
+        newCard.setCustomer(mergedCustomer);
+        em.persist(newCard);
+        em.merge(customer);
+        
+        em.remove(oldCard);
+    }
     
     @Override
     public Long createNewCustomer(Customer newCust) {
@@ -53,7 +69,11 @@ public class TellerTerminalMachineSessionBean implements TellerTerminalMachineSe
     }  
     
     @Override
-    public Long OpenNewDepositAccount(DepositAccount depoAcc) {
+    public Long OpenNewDepositAccount(DepositAccount depoAcc, Customer customer) {
+        Customer mergedCustomer = em.merge(customer);
+        List<DepositAccount> list = mergedCustomer.getDepositAccount();
+        list.add(depoAcc);
+        mergedCustomer.setDepositAccount(list);
         return depositAccountSessionBeanLocal.createNewDepositAccount(depoAcc);
     }   
     

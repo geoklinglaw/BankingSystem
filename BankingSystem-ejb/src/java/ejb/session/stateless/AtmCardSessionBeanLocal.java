@@ -18,7 +18,7 @@ import util.exceptions.FailedToChangePin;
 @Local
 public interface AtmCardSessionBeanLocal {
 
-    public Long createNewAtmCard(AtmCard newCard);
+    public Long createNewAtmCard(AtmCard newCard, List<DepositAccount> depoAccList);
     
     public AtmCard retrieveAtmCardById(Long atmCardId) throws CouldNotRetrieveFromDB;
 

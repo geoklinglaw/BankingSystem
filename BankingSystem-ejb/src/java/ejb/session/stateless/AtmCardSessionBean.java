@@ -24,9 +24,15 @@ public class AtmCardSessionBean implements AtmCardSessionBeanRemote, AtmCardSess
     private EntityManager em;
 
     @Override
-    public Long createNewAtmCard(AtmCard newCard) {
+    public Long createNewAtmCard(AtmCard newCard, List<DepositAccount> depoAccList) {
         em.persist(newCard);
         em.flush();
+        
+        for (DepositAccount depoAcc: depoAccList) {
+            DepositAccount depoAccount = em.merge(depoAcc);
+            newCard.getDepositAccount().add(depoAccount);
+            depoAccount.setAtmCard(newCard);
+        }
         
         return newCard.getAtmCardId();        
     }

@@ -23,7 +23,7 @@ import util.exceptions.FailedToChangePin;
 public class Main {
 
     @EJB(name = "AutomatedTellerMachineSessionBeanRemote")
-    private static AutomatedTellerMachineSessionBeanRemote AutomatedTellerMachineSessionBeanRemote;
+    private static AutomatedTellerMachineSessionBeanRemote automatedTellerMachineSessionBeanRemote;
 
 
     /**
@@ -55,20 +55,21 @@ public class Main {
                 insertATMCard(sc);
                 break;
             case 2:
-                changePin(sc);
+                updatePin(sc);
                 break;
 
         }
     }
     
-    private static void changePin(Scanner sc) {
+    private static void updatePin(Scanner sc) {
         Pair<String, String> pair = insertATMCardForPin(sc);
         String cardNum = pair.getKey();
         String cardPin = pair.getValue();
         System.out.print("Enter new card pin: ");
         String newPin = sc.nextLine();
+        System.out.println("cardpin: " + cardPin + " cardnum: " + cardNum);
         try {
-            AutomatedTellerMachineSessionBeanRemote.changePin(cardNum, cardPin, newPin);
+            automatedTellerMachineSessionBeanRemote.retrieveAndChangePin(cardNum, cardPin, newPin);
         } catch (FailedToChangePin e) {
             System.out.println(e.getMessage());
         } catch (CouldNotRetrieveFromDB ex) {
@@ -126,7 +127,7 @@ public class Main {
     
     private static boolean checkATMCard(String cardNum, String cardPin) {
         try {
-            AtmCard card = AutomatedTellerMachineSessionBeanRemote.InsertATMCard(cardNum, cardPin);
+            AtmCard card = automatedTellerMachineSessionBeanRemote.InsertATMCard(cardNum, cardPin);
 
             return card != null;
         } catch (CouldNotRetrieveFromDB e) {

@@ -49,10 +49,33 @@ public class Main {
             case 3:
                 runIssueAtmCard();
                 break;
+            case 4:
+                replaceATMCard();
+                break;
 
         }
     }
     
+   private static void replaceATMCard() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter New Card Number: ");
+        String cardNum = sc.next();
+        System.out.print("Enter New Name on Card: ");
+        String name = sc.next();
+        System.out.print("Enter New Card Pin: ");
+        String pinNum = sc.next();
+        System.out.print("Enter Your Identification: ");
+        String idNum = sc.next();
+        
+        Long custId = tellerTerminalMachineSessionBeanRemote.retrieveCustomerByIdentification(idNum);
+        Customer customer = tellerTerminalMachineSessionBeanRemote.retrieveCustomerById(custId);
+        AtmCard oldCard = customer.getAtmCard();
+        
+        AtmCard newCard = new AtmCard(cardNum, name, true, pinNum, customer);
+        tellerTerminalMachineSessionBeanRemote.replaceWithNewAtmCard(newCard, oldCard, customer);
+    }
+   
+   
 
     private static void runIssueAtmCard() {
         Scanner sc = new Scanner(System.in);
@@ -95,7 +118,7 @@ public class Main {
         Customer customer = tellerTerminalMachineSessionBeanRemote.retrieveCustomerById(custId);
         
         DepositAccount depoAcc = new DepositAccount(accountNum, depoAmt, depoAmt, depoAmt, true, customer);
-        Long id = tellerTerminalMachineSessionBeanRemote.OpenNewDepositAccount(depoAcc);
+        Long id = tellerTerminalMachineSessionBeanRemote.OpenNewDepositAccount(depoAcc, customer);
         
         if (id != null) {
             String depoAccInfo = "Successfully created a new deposit account: " + depoAcc.getAccountNumber() + " " + depoAcc.getAvailableBalance() + "!";
@@ -115,13 +138,13 @@ public class Main {
         System.out.print("Enter Customer Identification Number: ");
         String identificationNumber = sc.next();
         System.out.print("Enter Customer Contact Number: ");
-        String contactNumber = sc.next();
+        String contactNumber = sc.nextLine();
         System.out.print("Enter Customer Address Line 1: ");
         String address1 = sc.nextLine();
         System.out.print("Enter Customer Address Line 2: ");
         String address2 = sc.nextLine();
         System.out.print("Enter Customer Postal Code: ");
-        String postalCode = sc.next();     
+        String postalCode = sc.nextLine();     
         
         Customer cust = new Customer(firstName, lastName, identificationNumber, contactNumber, address1, address2, postalCode);
         System.out.println("check " + cust.getContactNumber());

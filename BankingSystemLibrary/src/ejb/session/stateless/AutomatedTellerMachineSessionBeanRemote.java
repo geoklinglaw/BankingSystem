@@ -19,5 +19,5 @@ public interface AutomatedTellerMachineSessionBeanRemote {
     
     public Long getATMId(String cardNum, String cardPin) throws CouldNotRetrieveFromDB;
     
-    public void changePin(String cardNum, String cardPin, String newPin) throws FailedToChangePin, CouldNotRetrieveFromDB;
+    public void retrieveAndChangePin(String cardNum, String cardPin, String newPin) throws FailedToChangePin, CouldNotRetrieveFromDB;
 }

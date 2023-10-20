@@ -18,12 +18,14 @@ public interface TellerTerminalMachineSessionBeanLocal {
     
     public Long createNewCustomer(Customer newCust);
     
-    public Long OpenNewDepositAccount(DepositAccount depoAcc);
+    public Long OpenNewDepositAccount(DepositAccount depoAcc, Customer customer);
     
     public Long retrieveCustomerByIdentification(String idNum);
     
     public Customer retrieveCustomerById(Long id);
     
-    public Long issueNewAtmCard(AtmCard card, Customer cust);
+    public Long issueNewAtmCard(AtmCard card, Customer customer);
+    
+    public void replaceWithNewAtmCard(AtmCard newCard, AtmCard oldCard, Customer customer);
     
 }
