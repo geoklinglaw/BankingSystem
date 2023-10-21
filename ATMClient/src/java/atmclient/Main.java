@@ -7,6 +7,8 @@ package atmclient;
 
 import ejb.session.stateless.AutomatedTellerMachineSessionBeanRemote;
 import entity.AtmCard;
+import entity.DepositAccount;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,6 +58,9 @@ public class Main {
             case 2:
                 updatePin(sc);
                 break;
+            case 3:
+                getDepositAccounts(sc);
+                break;
 
         }
     }
@@ -68,13 +73,14 @@ public class Main {
         String newPin = sc.nextLine();
         System.out.println("cardpin: " + cardPin + " cardnum: " + cardNum);
         try {
-            automatedTellerMachineSessionBeanRemote.retrieveAndChangePin(cardNum, cardPin, newPin);
-        } catch (FailedToChangePin e) {
-            System.out.println(e.getMessage());
-        } catch (CouldNotRetrieveFromDB ex) {
+            String updatedPin = automatedTellerMachineSessionBeanRemote.updatePin(cardNum, cardPin, newPin);
+            System.out.println("Successfully changed pin to " + updatedPin + "!");
+//        } catch (FailedToChangePin e) {
+//            System.out.println(e.getMessage());
+            } catch (CouldNotRetrieveFromDB ex) {
+                System.out.println("db issues :(");
         }
-        
-        System.out.println("Successfully changed pin!");
+//       
             
     }   
         
@@ -138,11 +144,30 @@ public class Main {
         }
     }
     
+    private static void getDepositAccounts(Scanner sc) {
+        try {
+            Pair<String, String> pair = insertATMCardForPin(sc);
+            String cardNum = pair.getKey();
+            String cardPin = pair.getValue();
+            List<DepositAccount> list = automatedTellerMachineSessionBeanRemote.getDepositAccountsFromAtmCard(cardNum, cardPin);
+            String listOfBalances = "The following shows your account name and balance: \n";
+            for (DepositAccount depoAcc: list) {
+                listOfBalances += depoAcc.getAccountNumber() + ": $" + depoAcc.getAvailableBalance();
+            }
+        } catch (CouldNotRetrieveFromDB e) {
+            e.printMessage();
+        }
+        
+        
+    }
+    
 
 
     private static void unverifiedATMCardMsg() {
         System.out.println("Invalid card number or pin. Please try again.");
     }
+    
+    
 
     
 }

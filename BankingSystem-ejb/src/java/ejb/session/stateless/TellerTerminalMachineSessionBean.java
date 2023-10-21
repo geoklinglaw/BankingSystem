@@ -45,10 +45,18 @@ public class TellerTerminalMachineSessionBean implements TellerTerminalMachineSe
     public void replaceWithNewAtmCard(AtmCard newCard, AtmCard oldCard, Customer customer) {
         oldCard = em.merge(oldCard);
         Customer mergedCustomer = em.merge(customer);
-        mergedCustomer.setAtmCard(newCard);
-        newCard.setCustomer(mergedCustomer);
-        em.persist(newCard);
-        em.merge(customer);
+        
+        int initialise = mergedCustomer.getDepositAccount().size();
+        
+        Long cardId = issueNewAtmCard(newCard, customer);
+        AtmCard replacementCard = em.find(AtmCard.class, cardId);
+        replacementCard.setCustomer(mergedCustomer);
+        mergedCustomer.setAtmCard(replacementCard);
+        
+        List<DepositAccount> depositAccountList = mergedCustomer.getDepositAccount();
+        for (DepositAccount depoAcc: depositAccountList) {
+            depoAcc.setAtmCard(replacementCard);
+        }
         
         em.remove(oldCard);
     }

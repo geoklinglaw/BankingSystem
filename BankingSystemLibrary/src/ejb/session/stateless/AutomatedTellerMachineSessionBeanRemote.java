@@ -4,6 +4,8 @@
  */
 package ejb.session.stateless;
 import entity.AtmCard;
+import entity.DepositAccount;
+import java.util.List;
 import javax.ejb.Remote;
 import util.exceptions.CouldNotRetrieveFromDB;
 import util.exceptions.FailedToChangePin;
@@ -20,4 +22,8 @@ public interface AutomatedTellerMachineSessionBeanRemote {
     public Long getATMId(String cardNum, String cardPin) throws CouldNotRetrieveFromDB;
     
     public void retrieveAndChangePin(String cardNum, String cardPin, String newPin) throws FailedToChangePin, CouldNotRetrieveFromDB;
+    
+    public String updatePin(String cardNum, String cardPin, String newPin) throws CouldNotRetrieveFromDB;
+    
+    public List<DepositAccount> getDepositAccountsFromAtmCard(String cardNum, String cardPin) throws CouldNotRetrieveFromDB;
 }

@@ -24,7 +24,7 @@ public interface AtmCardSessionBeanLocal {
 
     public Long retrieveATMCardByNumPin(String cardNum, String cardPin) throws CouldNotRetrieveFromDB;
     
-    public void changePin(Long cardId, String newPin) throws FailedToChangePin;
+    public String changePin(Long cardId, String newPin);
     
     public List<DepositAccount> getDepositAccountId(String cardNum, String cardPin) throws CouldNotRetrieveFromDB;
     

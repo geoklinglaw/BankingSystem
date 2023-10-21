@@ -172,5 +172,6 @@ public class AtmCard implements Serializable {
     public void setDepositAccount(List<DepositAccount> depositAccount) {
         this.depositAccount = depositAccount;
     }
-    
+
+
 }

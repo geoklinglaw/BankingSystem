@@ -9,6 +9,8 @@ import javax.ejb.Stateless;
 import entity.AtmCard;
 import entity.Customer;
 import entity.DepositAccount;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -59,6 +61,18 @@ public class AutomatedTellerMachineSessionBean implements AutomatedTellerMachine
     public Long getATMId(String cardNum, String cardPin) throws CouldNotRetrieveFromDB{
         Long cardId = atmCardSessionBeanLocal.retrieveATMCardByNumPin(cardNum, cardPin);
         return cardId;
+    }
+    
+    @Override
+    public String updatePin(String cardNum, String cardPin, String newPin) throws CouldNotRetrieveFromDB {
+        Long cardId = atmCardSessionBeanLocal.retrieveATMCardByNumPin(cardNum, cardPin);
+        String updatedPin = atmCardSessionBeanLocal.changePin(cardId, newPin);
+        return updatedPin;
+    }
+    
+    @Override 
+    public List<DepositAccount> getDepositAccountsFromAtmCard(String cardNum, String cardPin) throws CouldNotRetrieveFromDB {
+        return atmCardSessionBeanLocal.getDepositAccountId(cardNum, cardPin);
     }
     
 }

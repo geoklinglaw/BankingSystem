@@ -136,7 +136,7 @@ public class Main {
         System.out.print("Enter Customer Last Name: ");
         String lastName = sc.nextLine();
         System.out.print("Enter Customer Identification Number: ");
-        String identificationNumber = sc.next();
+        String identificationNumber = sc.nextLine();
         System.out.print("Enter Customer Contact Number: ");
         String contactNumber = sc.nextLine();
         System.out.print("Enter Customer Address Line 1: ");
