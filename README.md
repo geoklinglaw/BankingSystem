@@ -1,3 +1,4 @@
 # IS2103_BankingSystem
 
-Banking System Project is command-line interface with object-related mapping (ORM) using Jakarata EE server that allows system administrator to add customer, deposit account atmcard as well as issue replacement of atm card  as well as allow customers to insert atm card, change pin and check for available balance in the deposit account connected via the deposit account.
+
+The Banking System Project is a command-line interface built with object-relational mapping (ORM) using the Jakarta EE server. It enables system administrators to perform various tasks, such as adding customers, creating deposit accounts, issuing replacement ATM cards, and allowing customers to insert ATM cards. Customers can also change their PIN and check the available balance in their connected deposit accounts.
