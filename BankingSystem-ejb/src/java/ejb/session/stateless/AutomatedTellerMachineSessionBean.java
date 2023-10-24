@@ -64,7 +64,7 @@ public class AutomatedTellerMachineSessionBean implements AutomatedTellerMachine
     }
     
     @Override
-    public String updatePin(String cardNum, String cardPin, String newPin) throws CouldNotRetrieveFromDB {
+    public String UpdatePin(String cardNum, String cardPin, String newPin) throws CouldNotRetrieveFromDB {
         Long cardId = atmCardSessionBeanLocal.retrieveATMCardByNumPin(cardNum, cardPin);
         String updatedPin = atmCardSessionBeanLocal.changePin(cardId, newPin);
         return updatedPin;

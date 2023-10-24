@@ -23,7 +23,7 @@ public interface AutomatedTellerMachineSessionBeanRemote {
     
     public void retrieveAndChangePin(String cardNum, String cardPin, String newPin) throws FailedToChangePin, CouldNotRetrieveFromDB;
     
-    public String updatePin(String cardNum, String cardPin, String newPin) throws CouldNotRetrieveFromDB;
+    public String UpdatePin(String cardNum, String cardPin, String newPin) throws CouldNotRetrieveFromDB;
     
     public List<DepositAccount> getDepositAccountsFromAtmCard(String cardNum, String cardPin) throws CouldNotRetrieveFromDB;
 }

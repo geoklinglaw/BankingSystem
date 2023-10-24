@@ -7,3 +7,7 @@
 /TTMClient/dist/
 /ATMClient/dist/
 /BankingSystem-ejb/dist/
+/dist/
+/ATMachineClient/nbproject/private/
+/ATMachineClient/build/
+/ATMachineClient/dist/

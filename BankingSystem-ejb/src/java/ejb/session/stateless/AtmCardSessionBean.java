@@ -40,9 +40,10 @@ public class AtmCardSessionBean implements AtmCardSessionBeanRemote, AtmCardSess
         for (DepositAccount depoAcc: depoAccList) {
             DepositAccount depoAccount = em.merge(depoAcc);
             list.add(depoAccount);
-//            if(updatedCard != null) {
+            if(updatedCard != null) { // WHY CARD.SETDA CANNOT
 //                updatedCard.setDepositAccount(list);
-//            }      
+                updatedCard.getDepositAccount().add(depoAcc);
+            }      
             depoAccount.setAtmCard(newCard);
         }
         System.out.println(list);

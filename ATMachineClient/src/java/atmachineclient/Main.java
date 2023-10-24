@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package atmclient;
+package atmachineclient;
 
 
 import ejb.session.stateless.AutomatedTellerMachineSessionBeanRemote;
@@ -28,6 +28,7 @@ public class Main {
     private static AutomatedTellerMachineSessionBeanRemote automatedTellerMachineSessionBeanRemote;
 
 
+
     /**
      * @param args the command line arguments
      */
@@ -43,7 +44,6 @@ public class Main {
             instructions += "1: Insert ATM Card \n";
             instructions += "2: Change Pin Number \n";
             instructions += "3: Enquire Available Balance \n";
-            instructions += ">";
         } else {
             instructions += "Too bad! Get Teller Terminal to sign you up as a customer first :p";
         }
@@ -70,7 +70,7 @@ public class Main {
         Pair<String, String> pair = insertATMCardForPin(sc);
         String cardNum = pair.getKey();
         String cardPin = pair.getValue();
-        System.out.print("Enter new card pin: \n");
+        System.out.print("Enter new card pin: ");
         String newPin = sc.nextLine();
         System.out.println("cardpin: " + cardPin + " cardnum: " + cardNum);
         try {
@@ -78,21 +78,31 @@ public class Main {
             System.out.println("Successfully changed pin to " + updatedPin + "!");
 //        } catch (FailedToChangePin e) {
 //            System.out.println(e.getMessage());
-            } catch (CouldNotRetrieveFromDB ex) {
-                System.out.println("db issues :(");
+        } catch (CouldNotRetrieveFromDB ex) {
+            System.out.println("db issues :(");
         }
 //       
             
     }   
+    
+//    private static void testMethod(sc) {
+//        System.out.print("enter your customerId");
+//        String id = sc.nextLine();
+//        Long car = automated
+//        
+//        
+//        
+//               
+//    }
         
     private static void insertATMCard(Scanner sc) {
         Boolean verified = false;
 
         while (!verified) {
-            System.out.print("Enter ATM Card Number: \n");
+            System.out.print("Enter ATM Card Number: ");
             String cardNum = sc.nextLine();
 
-            System.out.print("Enter ATM Card Pin: \n");
+            System.out.print("Enter ATM Card Pin: ");
             String cardPin = sc.nextLine();
 
             verified = checkATMCard(cardNum, cardPin);
@@ -113,10 +123,10 @@ public class Main {
         String cardPin = "";
 
         while (!verified) {
-            System.out.print("Enter ATM Card Number: \n");
+            System.out.print("Enter ATM Card Number: ");
             cardNum = sc.nextLine();
 
-            System.out.print("Enter ATM Card Pin: \n");
+            System.out.print("Enter ATM Card Pin: ");
             cardPin = sc.nextLine();
 
             verified = checkATMCard(cardNum, cardPin);
@@ -147,19 +157,16 @@ public class Main {
     
     private static void getDepositAccounts(Scanner sc) {
         try {
-            System.out.println("Inquiring deposit accounts now...");
             Pair<String, String> pair = insertATMCardForPin(sc);
             String cardNum = pair.getKey();
             String cardPin = pair.getValue();
             List<DepositAccount> list = automatedTellerMachineSessionBeanRemote.getDepositAccountsFromAtmCard(cardNum, cardPin);
-            System.out.println(list.size());
             String listOfBalances = "The following shows your account name and balance: \n";
             for (DepositAccount depoAcc: list) {
-                listOfBalances += "Account: " + depoAcc.getAccountNumber() + ": $" + depoAcc.getAvailableBalance() + "\n";
+                listOfBalances += depoAcc.getAccountNumber() + ": $" + depoAcc.getAvailableBalance();
             }
-            System.out.print(listOfBalances);
         } catch (CouldNotRetrieveFromDB e) {
-            System.out.println("wrong :(");
+            e.printMessage();
         }
         
         

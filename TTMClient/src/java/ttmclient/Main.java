@@ -147,7 +147,6 @@ public class Main {
         String postalCode = sc.nextLine();     
         
         Customer cust = new Customer(firstName, lastName, identificationNumber, contactNumber, address1, address2, postalCode);
-        System.out.println("check " + cust.getContactNumber());
         Long id = tellerTerminalMachineSessionBeanRemote.createNewCustomer(cust);
         
         if (id != null) {
