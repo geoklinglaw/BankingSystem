@@ -35,6 +35,7 @@ public class Main {
         instructions += "2: Open Deposit Account\n";
         instructions += "3: Issue ATM Card\n";
         instructions += "4: Issue Replacement ATM Card\n";
+        instructions += "> ";
         
         System.out.print(instructions);
         int choice = sc.nextInt();

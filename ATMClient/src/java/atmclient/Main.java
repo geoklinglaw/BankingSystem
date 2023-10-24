@@ -34,7 +34,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String welcomeMsg = "Welcome to Automated Teller Terminal Client. \nAre you an existing customer? \n";
-        welcomeMsg += "Y: yes \nN: no";
+        welcomeMsg += "Y: yes \nN: no \n> ";
         System.out.println(welcomeMsg);
         String welcomeAns = sc.next();
         
@@ -43,7 +43,7 @@ public class Main {
             instructions += "1: Insert ATM Card \n";
             instructions += "2: Change Pin Number \n";
             instructions += "3: Enquire Available Balance \n";
-            instructions += ">";
+            instructions += "> ";
         } else {
             instructions += "Too bad! Get Teller Terminal to sign you up as a customer first :p";
         }
@@ -89,10 +89,10 @@ public class Main {
         Boolean verified = false;
 
         while (!verified) {
-            System.out.print("Enter ATM Card Number: \n");
+            System.out.print("Enter ATM Card Number: ");
             String cardNum = sc.nextLine();
 
-            System.out.print("Enter ATM Card Pin: \n");
+            System.out.print("Enter ATM Card Pin: ");
             String cardPin = sc.nextLine();
 
             verified = checkATMCard(cardNum, cardPin);
@@ -154,8 +154,9 @@ public class Main {
             List<DepositAccount> list = automatedTellerMachineSessionBeanRemote.getDepositAccountsFromAtmCard(cardNum, cardPin);
             System.out.println(list.size());
             String listOfBalances = "The following shows your account name and balance: \n";
+            int index = 1;
             for (DepositAccount depoAcc: list) {
-                listOfBalances += "Account: " + depoAcc.getAccountNumber() + ": $" + depoAcc.getAvailableBalance() + "\n";
+                listOfBalances += "Account " + index + ": " + depoAcc.getAccountNumber() + "| $" + depoAcc.getAvailableBalance() + "\n";
             }
             System.out.print(listOfBalances);
         } catch (CouldNotRetrieveFromDB e) {
