@@ -113,7 +113,7 @@ public class Main {
         String cardPin = "";
 
         while (!verified) {
-            System.out.print("Enter ATM Card Number:");
+            System.out.print("Enter ATM Card Number: ");
             cardNum = sc.nextLine();
 
             System.out.print("Enter ATM Card Pin: ");
@@ -152,7 +152,6 @@ public class Main {
             String cardNum = pair.getKey();
             String cardPin = pair.getValue();
             List<DepositAccount> list = automatedTellerMachineSessionBeanRemote.getDepositAccountsFromAtmCard(cardNum, cardPin);
-            System.out.println(list.size());
             String listOfBalances = "The following shows your account name and balance: \n";
             int index = 1;
             for (DepositAccount depoAcc: list) {
