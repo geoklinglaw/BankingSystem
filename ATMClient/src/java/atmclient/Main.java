@@ -35,7 +35,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String welcomeMsg = "Welcome to Automated Teller Terminal Client. \nAre you an existing customer? \n";
         welcomeMsg += "Y: yes \nN: no \n> ";
-        System.out.println(welcomeMsg);
+        System.out.print(welcomeMsg);
         String welcomeAns = sc.next();
         
         String instructions = "";

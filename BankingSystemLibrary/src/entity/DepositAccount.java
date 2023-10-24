@@ -36,7 +36,7 @@ public class DepositAccount implements Serializable {
     private List<DepositAccountTransaction> transactions;
 
     @ManyToOne(optional = true)
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = true)
     private AtmCard atmCard;
 
     
