@@ -113,10 +113,10 @@ public class Main {
         String cardPin = "";
 
         while (!verified) {
-            System.out.print("Enter ATM Card Number: \n");
+            System.out.print("Enter ATM Card Number:");
             cardNum = sc.nextLine();
 
-            System.out.print("Enter ATM Card Pin: \n");
+            System.out.print("Enter ATM Card Pin: ");
             cardPin = sc.nextLine();
 
             verified = checkATMCard(cardNum, cardPin);
@@ -156,7 +156,8 @@ public class Main {
             String listOfBalances = "The following shows your account name and balance: \n";
             int index = 1;
             for (DepositAccount depoAcc: list) {
-                listOfBalances += "Account " + index + ": " + depoAcc.getAccountNumber() + "| $" + depoAcc.getAvailableBalance() + "\n";
+                listOfBalances += "Account " + index + ": " + depoAcc.getAccountNumber() + " | $" + depoAcc.getAvailableBalance() + "\n";
+                index += 1;
             }
             System.out.print(listOfBalances);
         } catch (CouldNotRetrieveFromDB e) {
